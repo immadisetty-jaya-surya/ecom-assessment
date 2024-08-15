@@ -1,6 +1,7 @@
 import CartItem from "@/components/CartItem";
 import CartSummary from "@/components/CartSummary";
 import { useCart } from "@/utils/CartContext"
+import Link from "next/link";
 
 const Carts = () => {
   const {cart} = useCart();
@@ -15,6 +16,7 @@ const Carts = () => {
             ))}
           </div>
           <CartSummary />
+          <Link href='/checkout' className="bg-blue-500 text-white px-4 py-2 rounded mt-4 block text-center">Proceed to checkout</Link>
         </>
       ) : (
         <p>Dude! your cart is empty</p>
