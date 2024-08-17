@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className='flex items-center gap-4'>
           <Link href='/carts' className='flex items-center text-white text-lg font-bold'>
             <FiShoppingCart className='mr-2' />
-            Cart({getTotalItems()}){/* -{getSubTotal()} */}
+            Carts ({getTotalItems()}){/* -{getSubTotal()} */}
           </Link>
           <Link href='/checkout' className='text-white text-lg font-semibold ml-6 bg-blue-500 py-2 px-4 rounded hover:bg-blue-600 transition'>
             Checkout

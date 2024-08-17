@@ -19,7 +19,7 @@ const Carts = () => {
           <Link href='/checkout' className="bg-blue-500 text-white px-4 py-2 rounded mt-4 block text-center">Proceed to checkout</Link>
         </>
       ) : (
-        <p>Dude! your cart is empty</p>
+        <p>Dude! Your Cart is empty</p>
       )}
     </div>
   )
