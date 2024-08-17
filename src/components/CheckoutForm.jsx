@@ -2,7 +2,7 @@ import { useCart } from '@/utils/CartContext'
 import React, { useState } from 'react'
 
 const CheckoutForm = ({onSubmit}) => {
-  const {getSubTotal} = useCart();
+  const {getSubTotal,getTotalWithDiscount} = useCart();
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
   const [address,setAddress] = useState('')
@@ -11,7 +11,7 @@ const CheckoutForm = ({onSubmit}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name && email && address) {
-      onSubmit({name,email,address,paymentMethod,total: getSubTotal(),})
+      onSubmit({name,email,address,paymentMethod,total: getTotalWithDiscount(),})
     }else{
       alert('Please fill all inboxes');
     }
@@ -66,7 +66,7 @@ const CheckoutForm = ({onSubmit}) => {
       </div>
       <div className=' mt-6'>
         <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded w-full">
-          Pay ${getSubTotal()}
+          Pay ${getTotalWithDiscount()}
         </button>
       </div>
     </form>

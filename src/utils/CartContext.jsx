@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
@@ -8,6 +8,23 @@ export function useCart(){
 
 export function CartProvider({children}){
   const [cart, setCart] = useState([]);
+  const [discount,setDiscount] = useState(0);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    const storedDiscount = localStorage.getItem('discount');
+    if(storedCart){
+      setCart(JSON.parse(storedCart))
+    }
+    if(storedDiscount){
+      setDiscount(JSON.parse(storedDiscount))
+    }
+  },[])
+
+  useEffect(() => {
+    localStorage.setItem('cart',JSON.stringify(cart))
+    localStorage.setItem('discount',JSON.stringify(discount))
+  })
 
   const addToCart = (product) => {
     setCart(prevCart =>{
@@ -36,8 +53,24 @@ export function CartProvider({children}){
     return cart.reduce((sum,item) => sum + item.price * item.quantity, 0).toFixed(2);
   };
 
+  const getTotalWithDiscount = () => {
+    const subtotal = getSubTotal();
+    const discountAmt = (subtotal * discount) / 100;
+    return (subtotal - discountAmt).toFixed(2);
+  }
+
+  const applyDiscount = (discountCode) => {
+    if (discountCode === 'SAVE10') {
+      setDiscount(10)
+    }else if(discountCode === 'SAVE20'){
+      setDiscount(20)
+    }else{
+      alert('invalid discount code');
+    }
+  }
+
   return(
-    <CartContext.Provider value={{cart,addToCart,updateQuantity,removeItem,getTotalItems,getSubTotal}} >
+    <CartContext.Provider value={{cart,discount,addToCart,updateQuantity,removeItem,getTotalItems,getSubTotal,getTotalWithDiscount,applyDiscount}} >
       {children}
     </CartContext.Provider>
   )
